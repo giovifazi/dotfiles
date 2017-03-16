@@ -20,6 +20,7 @@ call vundle#end()
 
 " automatizza wa e make
 noremap \ :wa<Enter>:make<Enter>
+noremap \ :Mymake <Enter> 
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'  
 let g:ycm_show_diagnostic_ui = 0
