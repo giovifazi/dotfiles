@@ -19,7 +19,7 @@ call vundle#end()
 :command Wa wa
 
 " automatizza wa e make
-noremap \ :wa<Enter>:make<Enter>
+:command Mymake wa | make! | tab copen
 noremap \ :Mymake <Enter> 
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'  
