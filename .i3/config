@@ -66,9 +66,9 @@ font pango:monospace 8
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
 set $up l
-set $down k
+set $down semicolon
 set $left j
-set $right semicolon
+set $right k
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
