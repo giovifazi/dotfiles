@@ -17,6 +17,7 @@ call vundle#end()
 
 " corregge typo Wa in wa
 :command Wa wa
+:command W w
 
 " automatizza wa e make
 :command Mymake wa | make! | tab copen
@@ -91,12 +92,3 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
-
-func! WordProcessorMode()
-   setlocal textwidth=80
-   setlocal smartindent
-   setlocal spell spelllang=it_it
-   setlocal noexpandtab
-endfu
-
-com! WordProcessor call WordProcessorMode()
