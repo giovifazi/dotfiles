@@ -28,6 +28,9 @@ let g:ctrlp_clear_cache_on_exit = 0
 "imap ( ()<left>
 "imap  c<Esc><right>r"i
 "imap ' 'c<Esc><right>r'i
+" automatizza l aggiornamento delle tags. lancia vim nelle root del progetto
+:command TagsUpd !ctags -R .
+noremap <C-n> :TagsUpd <Enter>
 
 " mette automaticamente ; alla fine
 inoremap ;; <END>;
