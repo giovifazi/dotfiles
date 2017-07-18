@@ -38,7 +38,7 @@ noremap <C-n> :TagsUpd <Enter>
 
 " rigenera tags ogni 5 minuti (1000 = 1s) ma solo se sto editando files nella
 " mia git directory ed ho GIA generato un tags file
-if v:version > 800 
+if v:version >= 800 
    let tagTimer = timer_start(300000, 'FunTag', {'repeat':-1})
 
    func FunTag(timer)
