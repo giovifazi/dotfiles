@@ -38,13 +38,15 @@ noremap <C-n> :TagsUpd <Enter>
 
 " rigenera tags ogni 5 minuti (1000 = 1s) ma solo se sto editando files nella
 " mia git directory ed ho GIA generato un tags file
-let tagTimer = timer_start(300000, 'FunTag', {'repeat':-1})
+if v:version > 800 
+   let tagTimer = timer_start(300000, 'FunTag', {'repeat':-1})
 
-func FunTag(timer)
-   if isdirectory("../../git-projects") && filereadable("./tags")
-      silent! :TagsUpd <Enter>
-   endif
-endfunc
+   func FunTag(timer)
+      if isdirectory("../../git-projects") && filereadable("./tags")
+         silent! :TagsUpd <Enter>
+      endif
+   endfunc
+endif
 
 " mette automaticamente ; alla fine
 inoremap ;; <END>;
