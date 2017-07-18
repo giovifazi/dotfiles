@@ -28,9 +28,23 @@ let g:ctrlp_clear_cache_on_exit = 0
 "imap ( ()<left>
 "imap  c<Esc><right>r"i
 "imap ' 'c<Esc><right>r'i
+
+"mostra sempre la status bar
+set laststatus=2
+
 " automatizza l aggiornamento delle tags. lancia vim nelle root del progetto
 :command TagsUpd !ctags -R .
 noremap <C-n> :TagsUpd <Enter>
+
+" rigenera tags ogni 5 minuti (1000 = 1s) ma solo se sto editando files nella
+" mia git directory ed ho GIA generato un tags file
+let tagTimer = timer_start(300000, 'FunTag', {'repeat':-1})
+
+func FunTag(timer)
+   if isdirectory("../../git-projects") && filereadable("./tags")
+      silent! :TagsUpd <Enter>
+   endif
+endfunc
 
 " mette automaticamente ; alla fine
 inoremap ;; <END>;
@@ -47,8 +61,7 @@ noremap \ :Mymakesimple <Enter>
 
 set t_Co=256
 set term=screen-256color
-
-colorscheme babymate256
+colorscheme babymate256 
 
 filetype plugin indent on
 filetype plugin on
@@ -65,13 +78,29 @@ map <C-k> <C-W>l
 map <C-l> <C-W>k
 map <C-h> <C-W>j
 
+" incolla senza indentazione quando si preme spazio in normal mode
+noremap <Space> :call PasteSysClip() <Enter>
+
+func PasteSysClip()
+   set paste
+	normal! "*p
+	set nopaste
+endfunc
+
+"set tags+=~/.vim/systags               "path delle tags di /usr/include
+
+
+set autoread                      " ricarica file se e` stato modificato fuori da vim
+set showfulltag                   " mostra piu informazioni nel menu di autocomplete
 set omnifunc=syntaxcomplete#Complete
-set pastetoggle =<C-v>
+set completeopt+=preview,menuone
+set incsearch                     "evidenzia caratteri di ricerca mentre si scrive
 set nowrap                        "non fa andare a capo ma continua sulla stessa riga
+set cursorline                    "evidenzia la linea corrente
 set backspace=indent,eol,start    "mi sa che permette di cancellare tutto
-set expandtab   
+set expandtab                     "usa spazi anziche tabs
 set showmatch                     "illumina le parentesi corrispondenti
-set tabstop=3                     "un tab equivale a 4 spazi
+set tabstop=3                     "un tab equivale a 3 spazi
 set softtabstop=3
 set shiftwidth=3                  "numero di spazi usati per l' autoindentazione
 set autoindent                    "autoindenta quando vai a capo
