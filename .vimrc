@@ -10,6 +10,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'vim-scripts/Conque-GDB'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()
 
@@ -47,6 +48,9 @@ if v:version >= 800
       endif
    endfunc
 endif
+
+" apre nerdtree
+map <C-n> :NERDTreeToggle <CR>
 
 " mette automaticamente ; alla fine
 inoremap ;; <END>;
