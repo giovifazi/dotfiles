@@ -85,16 +85,22 @@ map <C-l> <C-W>k
 map <C-h> <C-W>j
 
 " incolla senza indentazione quando si preme spazio in normal mode
-noremap <Space> :call PasteSysClip() <Enter>
+if v:version >= 800 
+   noremap <Space> :call PasteSysClip() <Enter>
 
-func PasteSysClip()
-   set paste
-	normal! "*p
-	set nopaste
-endfunc
-
+   func PasteSysClip()
+      set paste
+      normal! "*p
+      set nopaste
+   endfunc
+else
+   noremap <Space> <C-S-v>
+endif
 "set tags+=~/.vim/systags               "path delle tags di /usr/include
 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_show_hidden = 1
 
 set autoread                      " ricarica file se e` stato modificato fuori da vim
 set showfulltag                   " mostra piu informazioni nel menu di autocomplete
