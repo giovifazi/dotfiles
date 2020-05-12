@@ -1,0 +1,54 @@
+#!/bin/bash
+# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+s="[$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | sed -n '/title/{n;p}' | cut -d '"' -f 2) ~ $(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Metadata | grep 'artist' -A2 | tail -1 | cut -d '"' -f2)] "
+
+# there are some characters that need to be escaped
+# but the problem is that the escaping sequence creates problem
+# with the circular print because, as an example, the
+# character & becomes &amp; this means the circular print
+# will print sometimes a part of the escaping sequence (lets say &am)
+
+#so to be euristic i just replace '&' with 'and'
+#s="${s//\&/&amp;}"
+#s="${s//\</&lt;}"
+#s="${s//\>/&gt;}"
+s="${s//\&/and}"
+
+# thanks blue Öyster cult
+s="${s//Ö/O}"
+
+if [ ${#s} -le 6 ]; then
+	echo "NoSpotify"
+fi
+
+if [ ${#s} -ge 26 ]; then
+	seconds=$(date +%s)
+	start=$(( (seconds % ${#s}) + 1 ))
+	end=$(( (start + 25) ))
+
+	#if $end goes over $s lenght, move $end back 
+	if [ "$end" -gt ${#s} ]; then
+		end=$(( end - ${#s} ))
+		circular="$(echo "$s" | cut -c$start-${#s})"
+		circular+="$(echo "$s" | cut -c1-$end)"
+		echo "$circular"
+	else
+		echo "$s" | cut -c$start-$end
+	fi
+else
+    echo "$s"
+fi
