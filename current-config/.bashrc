@@ -10,3 +10,6 @@ PS1='[\u@\h \W]\$ '
 
 export EDITOR=nvim
 set -o vi
+
+# mantain cltr+l shortcut in vi mode
+bind -m vi-insert "\C-l":clear-screen
